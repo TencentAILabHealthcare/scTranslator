@@ -77,7 +77,7 @@ $ python code/attention_matrix.py \
 # Compute origin protein abundance
 $ python code/pseudo_knockout_gene.py --gene='org'
 # Compute protein abundance after pseudo-knockout gene
-$ python code/pseudo_knockout_gene.py --gene='TRIM39' 
+$ python code/pseudo_knockout_gene.py --gene='TP53' 
 ```
 # Time cost
 
