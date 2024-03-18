@@ -17,8 +17,8 @@ def main():
     parser = argparse.ArgumentParser(description='PyTorch Example')
     parser.add_argument('--repeat', type=int, default=1,
                         help='for repeating experiments to change seed (default: 1)')
-    parser.add_argument('--test_batch_size', type=int, default=1,
-                        help='input batch size for testing (default: 1)')
+    parser.add_argument('--test_batch_size', type=int, default=4,
+                        help='input batch size for testing (default: 4)')
     parser.add_argument('--no-cuda', action='store_true', default=False,
                         help='disables CUDA training')
     parser.add_argument('--seed', type=int, default=1105,
@@ -41,17 +41,18 @@ def main():
     ###########################
     #--- Prepare The Model ---#
     ###########################
-    device = ('cuda' if torch.cuda.is_available() else 'cpu')
-    model = torch.load(args.pretrain_checkpoint)
-    model = model.to(device)
+    device = 'cuda' if torch.cuda.is_available() else 'cpu'
+    print('device',device)
+    model = torch.load(args.pretrain_checkpoint, map_location=torch.device(device))
+    # model = model.to(device)
 
     ##########################
     #--- Prepare The Data ---#
     ##########################
          
     #---  Load Single Cell Data  ---#
-    scRNA_adata = sc.read_h5ad(args.RNA_path)
-    scP_adata = sc.read_h5ad(args.Pro_path)
+    scRNA_adata = sc.read_h5ad(args.RNA_path)[:100]
+    scP_adata = sc.read_h5ad(args.Pro_path)[:100]
     print('Total number of origin RNA genes: ', scRNA_adata.n_vars)
     print('Total number of origin proteins: ', scP_adata.n_vars)
     print('Total number of origin cells: ', scRNA_adata.n_obs)

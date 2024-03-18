@@ -100,10 +100,10 @@ def main():
 
     print('seed', args.seed)
     #-----  Load model  -----#
-    model = torch.load(args.pretrain_checkpoint)
-    device = ('cuda' if torch.cuda.is_available() else 'cpu')
-    model = model.to(device)
-
+    device = 'cuda' if torch.cuda.is_available() else 'cpu'
+    print('device',device)
+    model = torch.load(args.pretrain_checkpoint, map_location=torch.device(device))
+    
     #-----  Load single-cell data  -----#
     scRNA_adata = sc.read_h5ad(args.RNA_path)
     obs = pd.DataFrame(scRNA_adata.obs.values.tolist(), index=scRNA_adata.obs.index)

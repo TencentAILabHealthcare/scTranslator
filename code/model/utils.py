@@ -24,12 +24,12 @@ def train(args, model, device, train_loader, optimizer, epoch):
     train_ccc = 0
     for batch_idx, (x, y) in enumerate(train_loader):
         #--- Extract Feature ---#
-        RNA_geneID = torch.tensor(x[:,1].tolist()).long().cuda()
-        Protein_geneID = torch.tensor(y[:,1].tolist()).long().cuda()
-        rna_mask = torch.tensor(x[:,2].tolist()).bool().cuda()
-        pro_mask = torch.tensor(y[:,2].tolist()).bool().cuda()
-        x = torch.tensor(x[:,0].tolist(), dtype=torch.float32).cuda()
-        y = torch.tensor(y[:,0].tolist(), dtype=torch.float32).cuda()
+        RNA_geneID = torch.tensor(x[:,1].tolist()).long().to(device)
+        Protein_geneID = torch.tensor(y[:,1].tolist()).long().to(device)
+        rna_mask = torch.tensor(x[:,2].tolist()).bool().to(device)
+        pro_mask = torch.tensor(y[:,2].tolist()).bool().to(device)
+        x = torch.tensor(x[:,0].tolist(), dtype=torch.float32).to(device)
+        y = torch.tensor(y[:,0].tolist(), dtype=torch.float32).to(device)
 
         #--- Prediction ---#
         optimizer.zero_grad()
@@ -63,12 +63,12 @@ def test(model, device, test_loader):
     with torch.no_grad():
         for x, y in test_loader:
             #--- Extract Feature ---#
-            RNA_geneID = torch.tensor(x[:,1].tolist()).long().cuda()
-            Protein_geneID = torch.tensor(y[:,1].tolist()).long().cuda()
-            rna_mask = torch.tensor(x[:,2].tolist()).bool().cuda()
-            pro_mask = torch.tensor(y[:,2].tolist()).bool().cuda()
-            x = torch.tensor(x[:,0].tolist(), dtype=torch.float32).cuda()
-            y = torch.tensor(y[:,0].tolist(), dtype=torch.float32).cuda()
+            RNA_geneID = torch.tensor(x[:,1].tolist()).long().to(device)
+            Protein_geneID = torch.tensor(y[:,1].tolist()).long().to(device)
+            rna_mask = torch.tensor(x[:,2].tolist()).bool().to(device)
+            pro_mask = torch.tensor(y[:,2].tolist()).bool().to(device)
+            x = torch.tensor(x[:,0].tolist(), dtype=torch.float32).to(device)
+            y = torch.tensor(y[:,0].tolist(), dtype=torch.float32).to(device)
 
             #--- Prediction ---#
             _, y_hat = model(x, RNA_geneID, Protein_geneID, enc_mask=rna_mask, dec_mask=pro_mask)
