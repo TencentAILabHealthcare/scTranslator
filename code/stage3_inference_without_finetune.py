@@ -76,8 +76,9 @@ def main():
     #---  Testing ---#
     ##################
     start_time = time.time()
-    test_loss, test_ccc = test(model, device, test_loader)
-
+    test_loss, test_ccc, y_hat, y = test(model, device, test_loader)
+    y_pred =  pd.DataFrame(y_hat, columns=test_protein.var.index.tolist())
+    y_truth = pd.DataFrame(y, columns=test_protein.var.index.tolist())
     ##############################
     #---  Prepare for Storage ---#
     ##############################
@@ -103,6 +104,9 @@ def main():
     log_all = pd.DataFrame(columns=['test_loss', 'test_ccc'])
     log_all.loc[args.repeat] = np.array([test_loss, test_ccc])
     log_all.to_csv(log_path)
+    y_pred.to_csv(file_path+'/y_pred.csv')
+    y_truth.to_csv(file_path+'/y_truth.csv')
+        
     print('-'*40)
     print('single cell '+str(args.enc_max_seq_len)+' RNA To '+str(args.dec_max_seq_len)+' Protein on dataset'+dataset_flag)
     print('Overall performance in repeat_%d costTime: %.4fs' % ( args.repeat, time.time() - start_time))

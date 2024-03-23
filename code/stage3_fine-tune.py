@@ -40,7 +40,7 @@ def main():
                         help='random seed (default: 1105)')
     parser.add_argument('--repeat', type=int, default=1,
                         help='for repeating experiments to change seed (default: 1)')
-    parser.add_argument('--local_rank', default=-1, type=int,
+    parser.add_argument('--local_rank', default=0, type=int,
                         help='node rank for distributed training')
     parser.add_argument('--frac_finetune_test', type=float, default=0.1,
                         help='test set ratio')
@@ -145,8 +145,8 @@ def main():
     ##########################
          
     #---  Load Single Cell Data  ---#
-    scRNA_adata = sc.read_h5ad(args.RNA_path)
-    scP_adata = sc.read_h5ad(args.Pro_path)
+    scRNA_adata = sc.read_h5ad(args.RNA_path)[:100]
+    scP_adata = sc.read_h5ad(args.Pro_path)[:100]
     print('Total number of origin RNA genes: ', scRNA_adata.n_vars)
     print('Total number of origin proteins: ', scP_adata.n_vars)
     print('Total number of origin cells: ', scRNA_adata.n_obs)
@@ -198,7 +198,9 @@ def main():
         train_loss, train_ccc = train(args, model, device, train_loader, optimizer, epoch)
         scheduler.step()
            
-    test_loss, test_ccc = test(model, device, test_loader)
+    test_loss, test_ccc, y_hat, y = test(model, device, test_loader)
+    y_pred =  pd.DataFrame(y_hat, columns=test_protein.var.index.tolist())
+    y_truth = pd.DataFrame(y, columns=test_protein.var.index.tolist())
 
     ##############################
     #---  Prepare for Storage ---#
@@ -226,6 +228,8 @@ def main():
     log_all = pd.DataFrame(columns=['train_loss', 'train_ccc', 'test_loss', 'test_ccc'])
     log_all.loc[args.repeat] = np.array([train_loss, train_ccc, test_loss, test_ccc])
     log_all.to_csv(log_path)
+    y_pred.to_csv(file_path+'/y_pred.csv')
+    y_truth.to_csv(file_path+'/y_truth.csv')
     print('-'*40)
     print('single cell '+str(args.enc_max_seq_len)+' RNA To '+str(args.dec_max_seq_len)+' Protein on dataset'+dataset_flag)
     print('Overall performance on rank_%d in repeat_%d costTime: %.4fs' % (rank, args.repeat, time.time() - start_time))

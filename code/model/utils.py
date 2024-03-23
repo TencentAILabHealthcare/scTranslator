@@ -60,6 +60,8 @@ def test(model, device, test_loader):
     loss2 = nn.CosineSimilarity(dim=0, eps=1e-8)
     test_loss = 0
     test_ccc = 0
+    y_hat_all = []
+    y_all = []
     with torch.no_grad():
         for x, y in test_loader:
             #--- Extract Feature ---#
@@ -80,9 +82,17 @@ def test(model, device, test_loader):
             test_loss += F.mse_loss(y_hat[pro_mask], y[pro_mask]).item()
             test_ccc += loss2(y_hat[pro_mask], y[pro_mask]).item()
 
+            if device == 'cpu':
+                y_hat_all.extend(y_hat[pro_mask].view(y_hat.shape[0], -1).numpy().tolist())
+                y_all.extend(y[pro_mask].view(y_hat.shape[0], -1).numpy().tolist())
+            else:
+                y_hat_all.extend(y_hat[pro_mask].view(y_hat.shape[0], -1).detach().cpu().numpy().tolist())
+                y_all.extend(y[pro_mask].view(y_hat.shape[0], -1).detach().cpu().numpy().tolist())
+       
+
     test_loss /= len(test_loader)
     test_ccc /= len(test_loader)
-    return test_loss, test_ccc
+    return test_loss, test_ccc, np.array(y_hat_all), np.array(y_all)
     
 #################################################
 #---------- Dataset Preprocess Function ---------#
