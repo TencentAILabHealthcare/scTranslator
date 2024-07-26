@@ -2,7 +2,7 @@
 
 Despite the recent advancements in single-cell proteome technology, it still has limitation on throughput, proteome depth and batch effect and the cost is still high. Inspired by the nature language translation and the central dogma of molecular biology, we propose a pre-trained large generative model named scTranslator (single-cell translator), which is align-free and generates absent single-cell proteome by inferring from the transcriptome.
 
-<img src='scTranslator.jpg' width=100%>
+<img src='scTranslator.jpg' width=80%>
 
 # Dataset
 The data can be downloaded from this link. If you have any question, please contact elainelliu@tencent.com.
