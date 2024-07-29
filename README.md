@@ -82,7 +82,7 @@ Download datasets and checkpoint from provided links and place to the correspond
     ------------------------|----------------------------| ----------------------------------------------
     origin_gene_column |If gene information is in the index column of anndata.var, use 'index'. If it's in a specific column, provide the column name, such as 'gene_name'. |'index'
     origin_gene_type   |Original gene type before mapping|choices=['mouse_gene_ID', 'mouse_gene_symbol', 'human_gene_symbol', 'EntrezID']
-    data_path          |dataset path                     |'dataset/test/cite-seq_mouse/spleen_lymph_111_RNA.h5ad'
+    data_path          |dataset path                     |'dataset/test/cite-seq_mouse/spleen_lymph_111.h5ad'
 
     
     
