@@ -75,7 +75,7 @@ Download datasets and checkpoint from provided links and place to the correspond
     $ python code/model/data_preprocessing_ID_convert.py \
     --origin_gene_type='mouse_gene_symbol' \
     --origin_gene_column='index' \
-    --data_path='dataset/test/cite-seq_mouse/spleen_lymph_111_RNA.h5ad'
+    --data_path='dataset/test/cite-seq_mouse/spleen_lymph_111.h5ad'
     ```
 
     Parameter               |Description                 | Default 
