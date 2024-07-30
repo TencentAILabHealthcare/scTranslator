@@ -14,9 +14,9 @@ The pre-trained models can be downloaded from these links. If you have any quest
 
 | Model name                | Description                                             | Download                                                                                     |
 | :------------------------ | :------------------------------------------------------ | :------------------------------------------------------------------------------------------- |
-| scTranslator 2M | Pretrained on over 2 million human cells and 18,000 bulk samples. | [link](https://drive.google.com/file/d/1KpD5dhiquXW9DhtRVlLkQqIQNrrP7N0D/view?usp=sharing) |
+| scTranslator 2M | Pretrained on over 2 million human cells and 18,000 bulk samples. | [link](https://drive.google.com/file/d/11FR3nebhJKAt_QIng35H-O1s_-ZrKyCG/view?usp=sharing) |
 | scTranslator 160k | Pretrained on over 160K human PBMCs and 18,000 bulk samples. | [link](https://drive.google.com/file/d/1nmYIsctfMD60DxOKKQc9-AQj2Wla24m8/view?usp=sharing) |
-| scTranslator 10k | Pretrained on over 18,000 bulk samples.                 | [link](https://drive.google.com/file/d/1pu8mbmM4kSnwsQAyOFn5qkIllMlR8u8i/view?usp=sharing) |
+| scTranslator 10k | Pretrained on over 18,000 bulk samples.                 | [link](https://drive.google.com/file/d/14D6hFCcMrrkpo7zW90WmH3FFOR-iyIZ-/view?usp=sharing) |
 
 
 
