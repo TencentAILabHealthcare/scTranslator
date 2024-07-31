@@ -439,7 +439,7 @@ def main():
         )
 
     
-    model.load_state_dict(torch.load(args.pretrain_checkpoint).cpu().state_dict())
+    model.load_state_dict(torch.load(args.pretrain_checkpoint, map_location=torch.device('cpu')).state_dict())
     device = ('cuda' if torch.cuda.is_available() else 'cpu')
     model = model.to(device)
     #-----  Load Single Cell Data  -----#
