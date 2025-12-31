@@ -27,6 +27,8 @@ def main():
                         help='sequence length of encoder')
     parser.add_argument('--dec_max_seq_len', type=int, default=1000,
                         help='sequence length of decoder')
+    parser.add_argument('--max_cell_num', default=100,
+                        help='maximum number of cells to include in the inference')
     parser.add_argument('--fix_set', action='store_false',
                         help='fix (aligned) or disordering (un-aligned) dataset')
     parser.add_argument('--pretrain_checkpoint', default='checkpoint/stage2_single-cell_scTranslator.pt',
@@ -35,6 +37,7 @@ def main():
                         help='path for loading the rna')
     parser.add_argument('--Pro_path', default='dataset/test/dataset1/GSM5008738_protein_finetune_withcelltype.h5ad',
                         help='path for loading the protein')
+ 
     args = parser.parse_args()
     warnings.filterwarnings('ignore')
     
@@ -51,8 +54,8 @@ def main():
     ##########################
          
     #---  Load Single Cell Data  ---#
-    scRNA_adata = sc.read_h5ad(args.RNA_path)[:100]
-    scP_adata = sc.read_h5ad(args.Pro_path)[:100]
+    scRNA_adata = sc.read_h5ad(args.RNA_path)[:args.max_cell_num]
+    scP_adata = sc.read_h5ad(args.Pro_path)[:args.max_cell_num]
     print('Total number of origin RNA genes: ', scRNA_adata.n_vars)
     print('Total number of origin proteins: ', scP_adata.n_vars)
     print('Total number of origin cells: ', scRNA_adata.n_obs)
